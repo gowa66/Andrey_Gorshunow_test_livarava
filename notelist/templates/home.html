@@ -1,0 +1,15 @@
+
+ {% extends "base.html" %} 
+ {% load i18n %}
+ 
+ {% block content %}
+ <h3>List of text notes</h3>
+ {% if object_list %}
+ <ul>
+    {% for note in object_list %}
+    <li>{{ note.text }}</li>
+    {% endfor %}
+ </ul>
+
+ {% endif %}
+ {% endblock content %}
