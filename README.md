@@ -1,4 +1,4 @@
-Additional Test Task (Django) Andriy Gorshunov
+Test Task (Django)
 ======
 
 Used python 2.7 and django 1.8.7
@@ -6,26 +6,27 @@ Used python 2.7 and django 1.8.7
 Installation start guide
 -----------------
 
-.. code-block::
+Clone project from GitHub
 
-    $ git  clone git@github.com:gowa66
-    $ cd 
+    $ git  clone git@github.com:gowa66/Django_test_LR.git
+    $ cd Django_test_LR
 
+Install virtualenv
 
-pip install virtualenv
-virtualenv .env
-source .env/bin/activate
+	$ pip install virtualenv
+	$ virtualenv .env
+	$ source .env/bin/activate
 
-After it you need to install requirements for project:
+Install requirements
 
-pip install -r requirements
+	$ pip install -r requirements
 
-Quickstart
-To start the project you need to run Django development server:
+Synch DB
 
-python manage.py runserver
+	$ python manage.py migrate
+	$ python manage.py createsuperuser
+	$ python manage.py syncdb
 
+Runserver
 
-http://127.0.0.1:8000/
-
-
+	$ python manage.py runserver
