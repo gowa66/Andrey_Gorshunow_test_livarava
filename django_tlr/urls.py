@@ -21,6 +21,7 @@ from notelist.views import NoteListView
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', NoteListView.as_view(), name='home'),
+    
 ]
 
 if settings.DEBUG:

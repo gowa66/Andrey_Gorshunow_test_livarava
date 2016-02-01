@@ -10,4 +10,4 @@ class Note(models.Model):
 
     class Meta:
         verbose_name_plural = _("text notes")
-    
+    	app_label = 'notelist'
