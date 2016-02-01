@@ -1,10 +1,10 @@
+{% extends "base.html" %} 
+{% load i18n %}
+{% load custom_tag %}
 
- {% extends "base.html" %} 
- {% load i18n %}
- 
- {% block content %}
+{% block content %}
 <div class="page-header">
-	<h1>List of text notes</h1>
+	<h1>{% trans 'List of text notes' %}</h1>
 </div>
 {% if object_list %}
 	<ul>
@@ -22,5 +22,7 @@
 		</div>
 	{% endfor %}
 	</ul>
+{% else %}
+<p>{% trans 'No text notes.' %}</p>
 {% endif %}
 {% endblock content %}
