@@ -3,13 +3,24 @@
  {% load i18n %}
  
  {% block content %}
- <h3>List of text notes</h3>
- {% if object_list %}
- <ul>
-    {% for note in object_list %}
-    <li>{{ note.text }}</li>
-    {% endfor %}
- </ul>
-
- {% endif %}
- {% endblock content %}
+<div class="page-header">
+	<h1>List of text notes</h1>
+</div>
+{% if object_list %}
+	<ul>
+	{% for note in object_list %}
+		<div class="row">
+			<div class="col-md-6">
+				<table class="table">
+					<tbody>   
+						<tr>
+							<td>{{ note.text }}</td>
+						</tr>       
+					</tbody>
+				</table>
+			</div>
+		</div>
+	{% endfor %}
+	</ul>
+{% endif %}
+{% endblock content %}

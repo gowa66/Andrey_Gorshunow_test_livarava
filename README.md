@@ -1,6 +1,16 @@
-Installation
+Additional Test Task (Django) Andriy Gorshunov
+======
 
-You need to install virtualenv and then activate it:
+Used python 2.7 and django 1.8.7
+
+Installation start guide
+-----------------
+
+.. code-block::
+
+    $ git  clone git@github.com:gowa66
+    $ cd 
+
 
 pip install virtualenv
 virtualenv .env
