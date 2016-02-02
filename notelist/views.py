@@ -1,6 +1,5 @@
-from django.shortcuts import render
 from django.core.urlresolvers import reverse
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView
 from django.views.generic.edit import CreateView
 from django.contrib.messages.views import SuccessMessageMixin
 from models import Note
