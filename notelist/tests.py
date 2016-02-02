@@ -2,6 +2,7 @@
 from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
 from django.template import Template, Context
+from django.core.urlresolvers import reverse
 
 from models import Note
 from forms import NoteForm
@@ -10,7 +11,7 @@ from forms import NoteForm
 
 class TextNoteTest(TestCase):   
     def test_unicode_representation(self):
-        note = Note(text="My entry title")
+        note = Note(text="MY ENTRY TITLE")
         self.assertEqual(unicode(note), note.text)
 
     def test_verbose_name_plural(self):
@@ -20,9 +21,9 @@ class TextNoteTest(TestCase):
 class TestHome(TestCase):
     def setUp(self):
         Note.objects.get_or_create(
-            text="Test Note 1")
+            text="TEST NOTE 1")
         Note.objects.get_or_create(
-            text="Test Note 2")
+            text="TEST NOTE 2")
         self.client = Client()
         self.url = reverse('home')
 
@@ -57,13 +58,33 @@ class NoteAddTest(TestCase):
         self.assertEqual(form.errors,  {'text': [u'This field is required.']})
 
     def test_valid_form(self):
-        form = NoteForm({"text": "Test Note Test Note"})
+        form = NoteForm({"text": "TEST NOTE TEST NOTE"})
         self.assertTrue(form.is_valid())
         note = form.save()
-        self.assertEqual(note.text, "Test Note Test Note") 
+        self.assertEqual(note.text, "TEST NOTE TEST NOTE") 
     
     def test_shorter_10_symbols(self):
         form = NoteForm({"text": "Test"})
         self.assertFalse(form.is_valid())
         self.assertEqual(form.errors,
                          {'text': [u'Do not allowed to post note shorter that 10 symbols.']})
+
+class CustoFormTest(TestCase):
+    def test_uppercase_note_adding(self):
+        uppercase_note = 'TEST UPPER TEXT NOTE.'
+        self.client.post(reverse('add_note'), {'text': uppercase_note})
+        resp = self.client.get(reverse('home'))
+        self.assertEqual(resp.status_code, 200)
+        self.assertTrue('object_list' in resp.context)
+        note_5 = resp.context['object_list'][0]
+        self.assertEqual(note_5.text, uppercase_note)
+
+    def test_lowercase_note_adding(self):
+        lowercase_note = 'test lower text note.'
+        uppercase_result = lowercase_note.upper()
+        self.client.post(reverse('add_note'), {'text': lowercase_note})
+        resp = self.client.get(reverse('home'))
+        self.assertEqual(resp.status_code, 200)
+        self.assertTrue('object_list' in resp.context)
+        note_5 = resp.context['object_list'][0]
+        self.assertEqual(note_5.text, uppercase_result)
