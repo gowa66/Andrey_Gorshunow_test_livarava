@@ -40,6 +40,10 @@ INSTALLED_APPS = (
     'notelist',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    
+)
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'notelist.context_processors.total_note_amount',
             ],
         },
     },
