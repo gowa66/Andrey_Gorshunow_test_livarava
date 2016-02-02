@@ -50,15 +50,20 @@ class TestHome(TestCase):
         response = self.client.get(self.url)
         self.assertContains(response, 'No text notes.')
 
-class NoteCreateTest(TestCase):
-    def test_valid_data(self):
-        form = NoteForm({"text": "Test Note"})
-        self.assertTrue(form.is_valid())
-        note = form.save()
-        self.assertEqual(note.text, "Test Note")
-
-    def test_blank_data(self):
+class NoteAddTest(TestCase):
+    def test_blank_form(self):
         form = NoteForm({})
         self.assertFalse(form.is_valid())
         self.assertEqual(form.errors,  {'text': [u'This field is required.']})
-        
+
+    def test_valid_form(self):
+        form = NoteForm({"text": "Test Note Test Note"})
+        self.assertTrue(form.is_valid())
+        note = form.save()
+        self.assertEqual(note.text, "Test Note Test Note") 
+    
+    def test_shorter_10_symbols(self):
+        form = NoteForm({"text": "Test"})
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors,
+                         {'text': [u'Do not allowed to post note shorter that 10 symbols.']})

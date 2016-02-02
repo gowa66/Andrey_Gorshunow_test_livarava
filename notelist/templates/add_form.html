@@ -22,11 +22,9 @@
     {% csrf_token %}
     <div class="form-group {% if form.text.errors %}has-error{% endif %}">
         <label for="text">
-        	{% trans "Enter your text" %}
+            {% trans "Enter your text" %}
         </label>
-        <textarea class="form-control" rows="3" name="text" id="text">
-        	{% if form.errors %}{{ form.text.value }}{% endif %}
-        </textarea>
+        <textarea class="form-control" rows="5" name="text" id="text">{% if form.errors %}{{ form.text.value }}{% endif %}</textarea>
         <span id="errors" class="help-block">
         	{{ form.text.errors }}
         </span>
