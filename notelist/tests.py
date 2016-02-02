@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.template import Template, Context
 
 from models import Note
+from forms import NoteForm
 # Create your tests here.
 
 
@@ -48,3 +49,16 @@ class TestHome(TestCase):
         Note.objects.all().delete()
         response = self.client.get(self.url)
         self.assertContains(response, 'No text notes.')
+
+class NoteCreateTest(TestCase):
+    def test_valid_data(self):
+        form = NoteForm({"text": "Test Note"})
+        self.assertTrue(form.is_valid())
+        note = form.save()
+        self.assertEqual(note.text, "Test Note")
+
+    def test_blank_data(self):
+        form = NoteForm({})
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors,  {'text': [u'This field is required.']})
+        

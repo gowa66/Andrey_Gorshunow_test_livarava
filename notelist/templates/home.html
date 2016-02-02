@@ -3,6 +3,7 @@
 {% load custom_tag %}
 
 {% block content %}
+<div class="jumbotron">
 <div class="page-header">
 	<h1>{% trans 'List of text notes' %}</h1>
 </div>
@@ -25,4 +26,5 @@
 {% else %}
 <p>{% trans 'No text notes.' %}</p>
 {% endif %}
+</div>
 {% endblock content %}
