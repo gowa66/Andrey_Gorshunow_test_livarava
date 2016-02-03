@@ -3,6 +3,7 @@ from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
 from django.template import Template, Context
 from django.core.urlresolvers import reverse
+from django.http import JsonResponse
 
 from models import Note
 from forms import NoteForm
@@ -88,3 +89,26 @@ class CustoFormTest(TestCase):
         self.assertTrue('object_list' in resp.context)
         note_5 = resp.context['object_list'][0]
         self.assertEqual(note_5.text, uppercase_result)
+
+class AjaxTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse('add_note')
+
+    def test_ajax_post(self):
+        response = self.client.post(self.url,
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+
+    def test_ajax_form_valid(self):
+        response = self.client.post(self.url,
+                                    {'text': 'TEST TEXT TEST TEXT'},
+                                    format='json',
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertTrue(isinstance(response, JsonResponse))
+        self.assertIn(
+            '"message": "Note added"',
+            response.content
+            )
+        self.assertIn('"notes_count": "1"', response.content)
+

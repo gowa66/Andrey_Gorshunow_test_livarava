@@ -3,24 +3,16 @@
 
 {% block content %}
 
-{% if messages %}
-<div class="alert alert-info" role="alert"> 
-	{% for message in messages %}
-		{{ message }}
-	{% endfor %}
-</div>
-{% endif %}
+<div class="alert alert-success {% if not messages %}hidden{% endif %}" role="alert" id='success-alert'> {% for message in messages %} {{ message }} {% endfor %}</div>
 
-{% if form.errors %}
-<div class="alert alert-warning" role="alert">
-	{% trans "Oh snap! Change a few things up and try submitting again." %}
-	<p>{{ form.non_field_errors }}</p>
-</div>
-{% endif %}
 
-<form method="post" action="{% url 'add_note' %}" class="form-horizontal col-md-6 col-xs-12">
+<div class="alert alert-warning {% if not form.errors %}hidden{% endif %}" role="alert" id='error-alert'>{% trans "Oh snap! Change a few things up and try submitting again." %}<p id='non-field-errors'>{% if form.errors %}{{ form.non_field_errors }}{% endif %}</p>
+</div>
+
+
+<form method="post" action="{% url 'add_note' %}" id="notesForm" class="form-horizontal col-md-6 col-xs-12">
     {% csrf_token %}
-    <div class="form-group {% if form.text.errors %}has-error{% endif %}">
+    <div class="form-group {% if form.text.errors %}has-error{% endif %}" id='text-field'>
         <label for="text">
             {% trans "Enter your text" %}
         </label>
