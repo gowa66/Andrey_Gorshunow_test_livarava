@@ -25,7 +25,6 @@ SECRET_KEY = 'yyqyp9lo!il(nv9icazvfz9ta6n8iw9*b+4i5^4uf&*wu(h7f&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -99,17 +98,11 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Parse database configuration from $DATABASE_URL
-DATABASES['default'] =  dj_database_url.config()
 
-# Enable Persistent Connections
-DATABASES['default']['CONN_MAX_AGE'] = 500
-
-# Honor the 'X-Forwarded-Proto' header for request.is_secure()
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
