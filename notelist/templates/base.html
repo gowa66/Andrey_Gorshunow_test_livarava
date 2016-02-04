@@ -30,6 +30,7 @@
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <li><a href="{% url 'add_note' %}">Add note</a></li>
+              <li><a href="{% url 'widget' %}">Widget</a></li>
               <li><a href="/admin/">Admin</a></li>
               <li class="active"><a href= >Total notes:<span class="badge" id='notes-count'>{{ total }}</span></a></li>
             </ul>
@@ -51,5 +52,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    
+    {% block javascript %} {% endblock %}
   </body>
 </html>
