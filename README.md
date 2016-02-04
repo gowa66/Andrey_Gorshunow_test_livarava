@@ -19,7 +19,7 @@ Install virtualenv
 
 Install requirements
 
-	$ pip install -r requirements
+	$ pip install -r requirements.txt
 
 Synch DB
 
