@@ -69,6 +69,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'notelist.context_processors.total_note_amount',
+                'django.template.context_processors.media',
             ],
         },
     },
