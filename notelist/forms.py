@@ -18,10 +18,11 @@ class NoteForm(ModelForm):
 		required=True, 
 		validators=[MinLengthValidator(10,message=_('Do not allowed to post note shorter that 10 symbols.'))]
         )
-
+	
+	
 	class Meta:
 		model = Note
-		fields = ['text']
+		fields = ['text', 'image']
 
 class NoteAdmin(ModelAdmin):
     form = NoteForm

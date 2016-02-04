@@ -4,6 +4,9 @@ from django.core.urlresolvers import reverse
 from django.template import Template, Context
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
+from StringIO import StringIO
+from PIL import Image
+import json
 
 from models import Note
 from forms import NoteForm
@@ -94,6 +97,11 @@ class AjaxTest(TestCase):
     def setUp(self):
         self.client = Client()
         self.url = reverse('add_note')
+        self.file_obj = StringIO()
+        self.image = Image.new("RGBA", size=(50, 50), color=(256, 0, 0))
+        self.image.save(self.file_obj, 'png')
+        self.file_obj.name = 'test.png'
+        self.file_obj.seek(0)
 
     def test_ajax_post(self):
         response = self.client.post(self.url,
@@ -102,13 +110,12 @@ class AjaxTest(TestCase):
 
     def test_ajax_form_valid(self):
         response = self.client.post(self.url,
-                                    {'text': 'TEST TEXT TEST TEXT'},
+                                    {'text': 'TEST TEXT TEST TEXT', 'image': self.file_obj,},
                                     format='json',
                                     HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertTrue(isinstance(response, JsonResponse))
-        self.assertIn(
-            '"message": "Note added"',
-            response.content
-            )
-        self.assertIn('"notes_count": "1"', response.content)
+        succes_message = json.dumps(
+            {u'message': u'Note added', u'notes_count': u'1'}
+             )
+        self.assertJSONEqual(succes_message, response.content)
 

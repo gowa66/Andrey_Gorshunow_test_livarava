@@ -17,12 +17,13 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf.urls.static import static
-from notelist.views import NoteListView, AddNoteView
+from notelist.views import NoteListView, AddNoteView, WidgetView, RandomNoteView
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', NoteListView.as_view(), name='home'),
     url(r'^add$', AddNoteView.as_view(), name='add_note'),
-    
+    url(r'^widget$', WidgetView.as_view(), name='widget'),
+    url(r'^random$', RandomNoteView.as_view(), name='random_note'),
 ]
 
 if settings.DEBUG:
