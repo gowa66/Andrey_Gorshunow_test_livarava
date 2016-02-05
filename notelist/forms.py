@@ -3,7 +3,6 @@ from django.utils.encoding import smart_text
 from django.core.validators import MinLengthValidator
 from django.utils.translation import ugettext_lazy as _
 from models import Note
-from django.contrib.admin import ModelAdmin
 
 class UpperCaseField(CharField):
     def to_python(self, value):
@@ -23,6 +22,3 @@ class NoteForm(ModelForm):
 	class Meta:
 		model = Note
 		fields = ['text', 'image']
-
-class NoteAdmin(ModelAdmin):
-    form = NoteForm
