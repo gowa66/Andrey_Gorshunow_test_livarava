@@ -4,6 +4,8 @@ from django.conf import settings
 
 DEBUG = True
 
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
 TEMPLATE_DEBUG = True
 
 DATABASES = settings.DATABASES
