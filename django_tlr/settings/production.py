@@ -4,8 +4,6 @@ from django.conf import settings
 
 DEBUG = True
 
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 TEMPLATE_DEBUG = True
 
 DATABASES = settings.DATABASES
@@ -21,14 +19,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
-
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-STATIC_URL = '/static/'
-
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static'),
-)
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
