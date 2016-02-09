@@ -4,16 +4,19 @@ from django.core.urlresolvers import reverse
 from django.template import Template, Context
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
+from django.http import HttpRequest
 from StringIO import StringIO
 from PIL import Image
 import json
 
-from models import Note
+from models import Note, Book
 from forms import NoteForm
+from context_processors import total_note_amount
 # Create your tests here.
 
 
-class TextNoteTest(TestCase):   
+class TextNoteTest(TestCase):
+    """Testing Note model"""
     def test_unicode_representation(self):
         note = Note(text="MY ENTRY TITLE")
         self.assertEqual(unicode(note), note.text)
@@ -23,6 +26,7 @@ class TextNoteTest(TestCase):
 
 
 class TestHome(TestCase):
+    """Testing page with text notes list"""
     def setUp(self):
         Note.objects.get_or_create(
             text="TEST NOTE 1")
@@ -56,6 +60,7 @@ class TestHome(TestCase):
         self.assertContains(response, 'No text notes.')
 
 class NoteAddTest(TestCase):
+    """Testing for adding note"""
     def test_blank_form(self):
         form = NoteForm({})
         self.assertFalse(form.is_valid())
@@ -74,6 +79,7 @@ class NoteAddTest(TestCase):
                          {'text': [u'Do not allowed to post note shorter that 10 symbols.']})
 
 class CustoFormTest(TestCase):
+    """Testing custom form"""
     def test_uppercase_note_adding(self):
         uppercase_note = 'TEST UPPER TEXT NOTE.'
         self.client.post(reverse('add_note'), {'text': uppercase_note})
@@ -93,7 +99,18 @@ class CustoFormTest(TestCase):
         note_5 = resp.context['object_list'][0]
         self.assertEqual(note_5.text, uppercase_result)
 
+class ContextProcessorsTest(TestCase):
+    """Test for note count context processor"""
+    fixtures = ['initial_data.json']
+
+    def test_processor(self):
+        """Test groups processor"""
+        request = HttpRequest()
+        data = total_note_amount(request)
+        self.assertEqual(data['total'], 5)
+
 class AjaxTest(TestCase):
+    """Testing for adding note view with AJAX"""
     def setUp(self):
         self.client = Client()
         self.url = reverse('add_note')
@@ -119,3 +136,86 @@ class AjaxTest(TestCase):
              )
         self.assertJSONEqual(succes_message, response.content)
 
+    def test_ajax_post_shorter_then_10_symbols(self):
+        response = self.client.post(
+            self.url,
+            {
+                'text': 'Test',
+                'image': self.file_obj,
+            },
+            format='json', HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        self.assertTrue(isinstance(response, JsonResponse))
+        error_message = json.dumps(
+            {"errors": {"text": ["Do not allowed to post note shorter that 10 symbols."]}}
+            )
+        self.assertJSONEqual(error_message, response.content)
+
+    def test_ajax_upload_valid_image(self):
+        not_image = StringIO()
+        not_image.write('First line.\n')
+        not_image.name = 'not_image.file'
+        not_image.seek(0)
+        response = self.client.post(
+            self.url,
+            {
+                'text': 'Test Text Test Text',
+                'image': not_image,
+            },
+            format='json', HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        self.assertTrue(isinstance(response, JsonResponse))
+        error_message = json.dumps(
+            {'errors': {'image': [(
+                    'Upload a valid image. The file you '
+                    'uploaded was either not an image or '
+                    'a corrupted image.')]}})
+        self.assertJSONEqual(error_message, response.content)
+
+class TestWidgetPage(TestCase):
+    """Testing page with widget"""
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse('widget')
+
+    def test_status(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_template_used(self):
+        response = self.client.get(self.url)
+        self.assertTemplateUsed(response, 'widget.html')
+
+class TestWidget(TestCase):
+    """Testing widget with random text note"""
+    fixtures = ['initial_data.json']
+
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse('random_note')
+        self.response = self.client.get(self.url)
+        self.notes = [object.text for object in Note.objects.all()]
+
+    def test_status(self):
+        self.assertEqual(self.response.status_code, 200)
+
+    def test_widget_content(self):
+        self.assertIn(
+            self.response.content.split('<td>')[1].split('</td>')[0],
+            self.notes
+        )
+
+class BookAutodeleteTest(TestCase):
+    """Testing book authomatically delete after last note is deleted"""
+    def test_book_autodelete(self):
+        note1 = Note(text='text')
+        note1.save()
+        note2 = Note(text='text')
+        note2.save()
+        book = Book(title='title')
+        book.save()
+        book.notes.add(*[note1, note2])
+        note1.delete()
+        self.assertTrue(Book.objects.all())
+        note2.delete()
+        self.assertFalse(Book.objects.all())

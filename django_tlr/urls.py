@@ -21,11 +21,11 @@ from notelist.views import NoteListView, AddNoteView, WidgetView, RandomNoteView
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', NoteListView.as_view(), name='home'),
-    url(r'^add$', AddNoteView.as_view(), name='add_note'),
-    url(r'^widget$', WidgetView.as_view(), name='widget'),
-    url(r'^random$', RandomNoteView.as_view(), name='random_note'),
+    url(r'^add/$', AddNoteView.as_view(), name='add_note'),
+    url(r'^widget/$', WidgetView.as_view(), name='widget'),
+    url(r'^random/$', RandomNoteView.as_view(), name='random_note'),
 ]
 
 if settings.DEBUG:
-	urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

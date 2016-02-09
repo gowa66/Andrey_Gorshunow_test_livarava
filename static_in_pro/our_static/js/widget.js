@@ -7,7 +7,7 @@ $(function(){
         $('body').append(div);
     }
     $.ajax({
-        url: 'http://nameless-citadel-98707.herokuapp.com/random',
+        url: '/random',
         dataType: 'json',
         success: function(data){
             console.log(data);

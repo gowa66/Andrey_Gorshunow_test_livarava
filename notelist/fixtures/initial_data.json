@@ -1,1 +1,37 @@
-[{"fields": {"text": "Test Note 1", "image": "note_Test Note 1/400px-Hubble_ultra_deep_field_high_rez_1kKk6KP.jpg"}, "model": "notelist.note", "pk": 13}, {"fields": {"text": "Test Note 2", "image": "note_Test Note 2/16688_OGpjpMu.jpg"}, "model": "notelist.note", "pk": 14}, {"fields": {"text": "Test Note 3", "image": "note_Test Note 3/490497-n300_irac.jpg"}, "model": "notelist.note", "pk": 15}, {"fields": {"text": "Test Note 4", "image": "note_Test Note 4/G61PZ3gZm-0.jpg"}, "model": "notelist.note", "pk": 16}, {"fields": {"text": "Test Note 5", "image": "note_Test Note 5/space_weather.jpg"}, "model": "notelist.note", "pk": 17}, {"fields": {"notes": [13, 14, 15, 16, 17], "title": "Test Book 1"}, "model": "notelist.book", "pk": 7}]
+[
+{
+	"fields": {
+		"text": "TestNote 1"
+		},
+		"model": "notelist.note",
+		"pk": 4
+},
+{
+	"fields": {
+		"text": "TestNote 2"
+		},
+		"model": "notelist.note",
+		"pk": 5
+},
+{
+	"fields": {
+		"text": "TestNote 3"
+		},
+		"model": "notelist.note",
+		"pk": 6
+},
+{
+	"fields": {
+		"text": "TestNote 4"
+		},
+		"model": "notelist.note",
+		"pk": 7
+},
+{
+	"fields": {
+		"text": "TestNote 5"
+		},
+		"model": "notelist.note",
+		"pk": 8
+}
+]

@@ -7,17 +7,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('notelist', '0004_note_image'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Note',
+            name='Book',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('text', models.TextField(verbose_name='text field')),
+                ('title', models.CharField(max_length=100)),
+                ('notes', models.ManyToManyField(to='notelist.Note')),
             ],
-            options={
-                'verbose_name_plural': 'text notes',
-            },
         ),
     ]
