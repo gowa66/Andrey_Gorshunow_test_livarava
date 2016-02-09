@@ -1,5 +1,4 @@
 django_tlr/settings/local.py
-static_in_env
 .env
 *.pyc
 *.sqlite3
