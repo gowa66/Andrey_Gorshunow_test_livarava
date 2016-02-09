@@ -15,7 +15,6 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -24,8 +23,6 @@ SECRET_KEY = 'yyqyp9lo!il(nv9icazvfz9ta6n8iw9*b+4i5^4uf&*wu(h7f&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-
 
 # Application definition
 
@@ -38,10 +35,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'notelist',
     'corsheaders',
-    
 )
-
-
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -77,7 +71,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'django_tlr.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
@@ -87,7 +80,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -102,8 +94,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
 
@@ -111,7 +101,7 @@ ALLOWED_HOSTS = ['*']
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static_in_pro", "static_root")
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_in_env", "static_root")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static_in_pro", "our_static"),
     # os.path.join(BASE_DIR, "static_in_env"),
@@ -119,6 +109,6 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "static_in_env ", "media_root")
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_in_env", "media_root")
 
 CORS_ORIGIN_ALLOW_ALL = True

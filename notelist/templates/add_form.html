@@ -5,10 +5,8 @@
 
 <div class="alert alert-success {% if not messages %}hidden{% endif %}" role="alert" id='success-alert'> {% for message in messages %} {{ message }} {% endfor %}</div>
 
-
 <div class="alert alert-warning {% if not form.errors %}hidden{% endif %}" role="alert" id='error-alert'>{% trans "Oh snap! Change a few things up and try submitting again." %}<p id='non-field-errors'>{% if form.errors %}{{ form.non_field_errors }}{% endif %}</p>
 </div>
-
 
 <form method="post" action="{% url 'add_note' %}" enctype=multipart/form-data id="notesForm" class="form-horizontal col-md-6 col-xs-12">
     {% csrf_token %}
@@ -18,7 +16,7 @@
         </label>
         <textarea class="form-control" rows="5" name="text" id="text">{% if form.errors %}{{ form.text.value }}{% endif %}</textarea>
         <span id="errors-text" class="help-block">
-        	{{ form.text.errors }}
+            {{ form.text.errors }}
         </span>
     </div>
     <div class="form-group" id='image-field'>
