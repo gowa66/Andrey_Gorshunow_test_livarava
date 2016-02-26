@@ -34,6 +34,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'notelist',
+    'request',
     'corsheaders',
 )
 
@@ -47,6 +48,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'request.middleware.SaveRequestMiddleware',
 )
 
 ROOT_URLCONF = 'django_tlr.urls'
