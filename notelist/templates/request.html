@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block head_title %}Requests | {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class='col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2'>
+
+    <ul class='list-unstyled'>
+        {% csrf_token %}
+        {% for object in object_list %}
+        <li>
+            <span class='requests obj-id badge alert-info'>{{ object.id }}</span>
+            <span class='requests obj-title badge alert-info'>{{ object }}</span>
+            <span class='requests obj-timestamp badge alert-info'>{{ object.timestamp|date:'Y-m-d H:i' }}</span>
+            <span class='requests obj-viewed badge alert-success'>{{ object.viewed }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+
+{% block javascript %}
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.1/visibility.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/request.js' %}"></script>
+{% endblock %}

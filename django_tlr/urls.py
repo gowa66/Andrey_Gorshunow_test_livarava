@@ -18,12 +18,18 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf.urls.static import static
 from notelist.views import NoteListView, AddNoteView, WidgetView, RandomNoteView
+from request.views import (RequestListView, RequestCounterView, )
+
+admin.autodiscover()
+
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', NoteListView.as_view(), name='home'),
     url(r'^add/$', AddNoteView.as_view(), name='add_note'),
     url(r'^widget/$', WidgetView.as_view(), name='widget'),
     url(r'^random/$', RandomNoteView.as_view(), name='random_note'),
+    url(r'^request/$', RequestListView.as_view(), name='request'),
+    url(r'^request-counter/$', RequestCounterView.as_view(), name='request-counter'),
 ]
 
 if settings.DEBUG:
